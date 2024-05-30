@@ -14,45 +14,57 @@ export class FetchData extends Component {
 
   static renderForecastsTable(forecasts) {
     return (
-      <table className="table table-striped" aria-labelledby="tableLabel">
-        <thead>
+        <table className="table table-striped" aria-labelledby="tableLabel">
+          <thead>
           <tr>
             <th>Date</th>
             <th>Temp. (C)</th>
             <th>Temp. (F)</th>
             <th>Summary</th>
           </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
           {forecasts.map(forecast =>
-            <tr key={forecast.date}>
-              <td>{forecast.date}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
-            </tr>
+              <tr key={forecast.date}>
+                <td>{forecast.date}</td>
+                <td>{forecast.temperatureC}</td>
+                <td>{forecast.temperatureF}</td>
+                <td>{forecast.summary}</td>
+              </tr>
           )}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
     );
   }
 
   render() {
     let contents = this.state.loading
-      ? <p><em>Loading...</em></p>
-      : FetchData.renderForecastsTable(this.state.forecasts);
+        ? <p><em>Loading...</em></p>
+        : FetchData.renderForecastsTable(this.state.forecasts);
 
     return (
-      <div>
-        <h1 id="tableLabel">Weather forecast</h1>
-        <p>This component demonstrates fetching data from the server.</p>
-        {contents}
-      </div>
+        <div>
+          <h1 id="tableLabel">Weather forecast</h1>
+          <p>This component demonstrates fetching data from the server.</p>
+          {contents}
+        </div>
     );
   }
 
   async populateWeatherData() {
-    const response = await fetch('weatherforecast');
+    const token = localStorage.getItem("token"); // Get the token from local storage
+    console.log("Hello")
+    if (!token) {
+      console.error('No token found in localStorage');
+      return;
+    }
+    const response = await fetch('weatherforecast', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
     const data = await response.json();
     this.setState({ forecasts: data, loading: false });
   }

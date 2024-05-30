@@ -3,8 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import { Layout } from './components/Layout';
 import './custom.css';
-import MyComponent from "./components/Home";
-import {GoogleMap} from "@react-google-maps/api";
+import {Map} from "./components/Map";
 
 export default class App extends Component {
   static displayName = App.name;
@@ -18,7 +17,6 @@ export default class App extends Component {
             return <Route key={index} {...rest} element={element} />;
           })}
         </Routes>
-          <MyComponent></MyComponent>
       </Layout>
     );
   }
