@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace LostAndFound;
 
 public class WeatherForecast
