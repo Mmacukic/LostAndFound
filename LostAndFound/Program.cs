@@ -7,11 +7,12 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 var jwtSettings = builder.Configuration.GetSection("Authentication");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 // Add services to the container.
 builder.Services.AddDbContext<LostAndFoundContext>(options =>
 {
     options.UseSqlServer(
-        "Server=localhost,1433;Database=LostAndFound;User Id=sa;Password=Cripmarc777!;TrustServerCertificate=True");
+        connectionString);
 
 
 });
